@@ -1,0 +1,1 @@
+# object_template_generator
