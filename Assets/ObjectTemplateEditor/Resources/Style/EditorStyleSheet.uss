@@ -1,1 +1,60 @@
-VisualElement {}
+#title {
+    font-size: 25px;
+    -unity-text-align: middle-center;
+}
+
+#New {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+#TemplateList {
+    margin-top: 10px;
+}
+
+#List > Label {
+    font-size: 18px;
+}
+
+#List {
+    margin-top: 10px;
+}
+
+#Save {
+    font-size: 15px;
+}
+
+#TemplateView {
+    margin-top: 20px;
+}
+
+#TemplateName {
+    font-size: 13px;
+    -unity-font-style: bold;
+}
+
+#TemplateProperties {
+    margin-top: 10px;
+}
+
+#TemplateName > Label {
+    width: 100px;
+}
+
+#Position > Label {
+    align-items: stretch;
+}
+
+#x > Label {
+    white-space: normal;
+    width: auto;
+    flex-shrink: 1;
+}
+
+#x {
+    width: auto;
+    max-width: none;
+}
+
+#x > #unity-text-input {
+}

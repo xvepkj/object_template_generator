@@ -1,3 +1,22 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/ObjectTemplateEditor/Resources/Style/EditorStyleSheet.uss?fileID=7433441132597879392&amp;guid=dcf6a9204b4a1f64185b54d736cb8948&amp;type=3#EditorStyleSheet" />
+    <ui:Label text="Template Object Generator" display-tooltip-when-elided="true" name="title" style="-unity-font-style: bold;" />
+    <ui:Button text="New Template" display-tooltip-when-elided="true" name="New" />
+    <ui:VisualElement name="List">
+        <ui:Label text="Template List" display-tooltip-when-elided="true" name="Label" />
+        <ui:ListView focusable="true" name="TemplateListView" />
+    </ui:VisualElement>
+    <ui:VisualElement name="TemplateView">
+        <ui:TextField picking-mode="Ignore" label="Template Name" value="filler text" text="sample template" name="TemplateName" style="flex-direction: row;" />
+        <ui:ListView focusable="true" name="ObjectList" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ObjectProperties">
+        <ui:VisualElement name="Position" style="flex-direction: column; align-items: auto;">
+            <ui:Label text="Position " display-tooltip-when-elided="true" name="Label" style="width: 97px; white-space: nowrap;" />
+            <ui:TextField picking-mode="Ignore" label="x" value="filler text" text="filler text" name="x" />
+            <ui:TextField picking-mode="Ignore" label="y" value="filler text" text="filler text" name="y" />
+            <ui:TextField picking-mode="Ignore" label="z" value="filler text" text="filler text" name="z" />
+        </ui:VisualElement>
+        <ui:Button text="Save" display-tooltip-when-elided="true" name="Save" />
+    </ui:VisualElement>
 </ui:UXML>
