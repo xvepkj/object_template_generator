@@ -22,6 +22,7 @@
 
 #Save {
     font-size: 15px;
+    margin-top: 20px;
 }
 
 #TemplateView {
@@ -57,4 +58,12 @@
 }
 
 #x > #unity-text-input {
+}
+
+#NewObjectButton {
+    font-size: 15px;
+}
+
+#EditObjectButton {
+    font-size: 15px;
 }

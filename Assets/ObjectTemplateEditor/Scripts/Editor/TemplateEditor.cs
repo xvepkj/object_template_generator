@@ -7,10 +7,18 @@ using System.IO;
 using System.Linq;
 
 [System.Serializable]
-public class Template
+public class GameObj
 {
     public string name;
     public Vector3 position;
+    public List<GameObj> gameObjs;
+}
+
+[System.Serializable]
+public class Template
+{
+    public string name;
+    public List<GameObj> gameObjs;
 }
 
 [System.Serializable]
@@ -28,6 +36,8 @@ public class TemplateEditor : EditorWindow
     private VisualElement objectProps;
     private VisualElement objectPosition;
     private ListView templateListView;
+    private TextField objectName;
+    private ListView objectListView; // ListView for GameObjs
 
     private bool isGUICreated = false;
 
@@ -70,7 +80,9 @@ public class TemplateEditor : EditorWindow
         templateView = root.Q<VisualElement>("TemplateView");
         objectProps = root.Q<VisualElement>("ObjectProperties");
         objectPosition = root.Q<VisualElement>("Position");
-        templateListView = root.Q<ListView>("TemplateListView"); // Adjust the name accordingly in your UXML.
+        templateListView = root.Q<ListView>("TemplateListView");
+        objectName = root.Q<TextField>("ObjectName");
+        objectListView = root.Q<ListView>("ObjectList"); // ListView for GameObjs
 
         newTemplate.clickable.clicked += AddTemplate;
         saveTemplate.clickable.clicked += SaveTemplate;
@@ -79,6 +91,23 @@ public class TemplateEditor : EditorWindow
 
         // Subscribe to selection change event
         templateListView.onSelectionChange += OnTemplateSelected;
+
+        // Initialize ObjectListView
+        objectListView.makeItem = () => new Label();
+        objectListView.bindItem = (element, index) =>
+        {
+            if (element is Label label)
+            {
+                if (index >= 0 && index < currentTemplateList.templates[templateListView.selectedIndex].gameObjs.Count)
+                {
+                    label.text = currentTemplateList.templates[templateListView.selectedIndex].gameObjs[index].name;
+                }
+                else
+                {
+                    label.text = "Invalid Index";
+                }
+            }
+        };
     }
 
     private void OnTemplateSelected(IEnumerable<object> selectedItems)
@@ -94,6 +123,10 @@ public class TemplateEditor : EditorWindow
                 // Load the selected template data into the TemplateView
                 Template selectedTemplate = currentTemplateList.templates[selectedIndex];
                 LoadTemplateData(selectedTemplate);
+
+                // Populate ObjectListView with GameObjData
+                objectListView.itemsSource = selectedTemplate.gameObjs;
+                objectListView.Rebuild(); // Refresh the ObjectListView
             }
         }
     }
@@ -102,9 +135,9 @@ public class TemplateEditor : EditorWindow
     {
         // Set the loaded template data in the TemplateView fields
         templateView.Q<TextField>("TemplateName").value = template.name;
-        objectPosition.Q<TextField>("x").value = template.position.x.ToString();
-        objectPosition.Q<TextField>("y").value = template.position.y.ToString();
-        objectPosition.Q<TextField>("z").value = template.position.z.ToString();
+        objectPosition.Q<TextField>("x").value = template.gameObjs[objectListView.selectedIndex].position.x.ToString();
+        objectPosition.Q<TextField>("y").value = template.gameObjs[objectListView.selectedIndex].position.y.ToString();
+        objectPosition.Q<TextField>("z").value = template.gameObjs[objectListView.selectedIndex].position.z.ToString();
     }
 
     private void LoadTemplateList()
@@ -136,7 +169,7 @@ public class TemplateEditor : EditorWindow
                 }
             }
         };
-        templateListView.Rebuild();
+        templateListView.Rebuild(); // Refresh the TemplateListView
     }
 
     private void AddTemplate()
@@ -144,11 +177,7 @@ public class TemplateEditor : EditorWindow
         Template template = new Template
         {
             name = templateView.Q<TextField>("TemplateName").value,
-            position = new Vector3(
-                float.Parse(objectPosition.Q<TextField>("x").value),
-                float.Parse(objectPosition.Q<TextField>("y").value),
-                float.Parse(objectPosition.Q<TextField>("z").value)
-            )
+            gameObjs = new List<GameObj>()
         };
 
         currentTemplateList.templates.Add(template);
@@ -159,9 +188,6 @@ public class TemplateEditor : EditorWindow
 
         // Clear the TemplateView fields after adding a new template
         templateView.Q<TextField>("TemplateName").value = "";
-        objectPosition.Q<TextField>("x").value = "";
-        objectPosition.Q<TextField>("y").value = "";
-        objectPosition.Q<TextField>("z").value = "";
     }
 
     private void SaveTemplate()

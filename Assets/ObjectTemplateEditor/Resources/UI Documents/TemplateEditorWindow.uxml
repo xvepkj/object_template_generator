@@ -7,16 +7,19 @@
         <ui:ListView focusable="true" name="TemplateListView" />
     </ui:VisualElement>
     <ui:VisualElement name="TemplateView">
-        <ui:TextField picking-mode="Ignore" label="Template Name" value="filler text" text="sample template" name="TemplateName" style="flex-direction: row;" />
+        <ui:TextField picking-mode="Ignore" label="Template Name" value="filler text" text="-" name="TemplateName" style="flex-direction: row;" />
         <ui:ListView focusable="true" name="ObjectList" />
     </ui:VisualElement>
     <ui:VisualElement name="ObjectProperties">
+        <ui:TextField picking-mode="Ignore" label="Object Name" value="filler text" text="-" name="ObjectName" />
         <ui:VisualElement name="Position" style="flex-direction: column; align-items: auto;">
             <ui:Label text="Position " display-tooltip-when-elided="true" name="Label" style="width: 97px; white-space: nowrap;" />
             <ui:TextField picking-mode="Ignore" label="x" value="filler text" text="filler text" name="x" />
             <ui:TextField picking-mode="Ignore" label="y" value="filler text" text="filler text" name="y" />
             <ui:TextField picking-mode="Ignore" label="z" value="filler text" text="filler text" name="z" />
         </ui:VisualElement>
-        <ui:Button text="Save" display-tooltip-when-elided="true" name="Save" />
+        <ui:Button text="Edit Object" display-tooltip-when-elided="true" enable-rich-text="true" name="EditObjectButton" />
+        <ui:Button text="Add New Object" display-tooltip-when-elided="true" enable-rich-text="true" name="NewObjectButton" />
+        <ui:Button text="Save Template" display-tooltip-when-elided="true" name="Save" />
     </ui:VisualElement>
 </ui:UXML>
